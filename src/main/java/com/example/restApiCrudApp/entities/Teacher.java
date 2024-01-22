@@ -16,15 +16,10 @@ import java.util.List;
 @Builder
 @ToString
 public class Teacher {
-
     private Long id;
-
     private String firstName;
-
     private String lastName;
-
     private Long subjectId;
-
     private List<Group> groups;
 
 }

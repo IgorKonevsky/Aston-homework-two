@@ -1,7 +1,7 @@
 package com.example.restApiCrudApp.services.impl;
 
 import com.example.restApiCrudApp.dto.GroupDTO;
-import com.example.restApiCrudApp.dto.IdDTO;
+import com.example.restApiCrudApp.dto.LinkDto;
 import com.example.restApiCrudApp.dto.TeacherDTO;
 import com.example.restApiCrudApp.entities.Group;
 import com.example.restApiCrudApp.entities.Teacher;
@@ -20,10 +20,8 @@ import com.example.restApiCrudApp.services.TeacherService;
 import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
-
     private final TeacherRepository teacherRepository;
     private final GroupRepository groupRepository;
-
     private final SubjectRepository subjectRepository;
     private final TeacherMapper teacherMapper;
     private final GroupMapper groupMapper;
@@ -62,6 +60,8 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherDTO teacherDTO = teacherMapper.toDTO(teacher);
         String subjectName = pullSubjectName(teacherDTO.getId());
         teacherDTO.setSubjectName(subjectName);
+        List<GroupDTO> groupDTOS = pullGroupsByTeacherId(id);
+        teacherDTO.setGroupDTOS(groupDTOS);
         return teacherDTO;
     }
 
@@ -107,7 +107,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public IdDTO linkTeacherToGroup(IdDTO ids) {
+    public LinkDto linkTeacherToGroup(LinkDto ids) {
         teacherRepository.linkTeacherToGroup(ids.getTeacherId(), ids.getGroupId());
         return ids;
     }

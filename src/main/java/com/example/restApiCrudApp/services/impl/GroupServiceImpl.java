@@ -17,11 +17,8 @@ import com.example.restApiCrudApp.services.GroupService;
 import java.util.List;
 
 public class GroupServiceImpl implements GroupService {
-
     private final GroupRepository groupRepository;
-
     private final TeacherRepository teacherRepository;
-
     private final GroupMapper groupMapper;
     private final TeacherMapper teacherMapper;
 
@@ -56,7 +53,6 @@ public class GroupServiceImpl implements GroupService {
         }
         return groupDTOS;
     }
-
     @Override
     public List<GroupDTO> findAll() {
         List<Group> groups = groupRepository.findAll();
@@ -67,7 +63,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDTO findById(Long id) {
         Group group = groupRepository.findById(id);
-        return groupMapper.toDTO(group);
+        List<TeacherDTO> teacherDTOS = pullTeachersByGroupId(id);
+        GroupDTO groupDTO= groupMapper.toDTO(group);
+        groupDTO.setTeacherDTOS(teacherDTOS);
+        return groupDTO;
     }
 
     @Override
@@ -84,7 +83,6 @@ public class GroupServiceImpl implements GroupService {
         return groupMapper.toDTO(updatedGroup);
 
     }
-
 
     @Override
     public void delete(Long id) {

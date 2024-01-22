@@ -15,7 +15,6 @@ import java.util.List;
 
 @WebServlet(name = "GroupServlet", value = "/api/group/*")
 public class GroupServlet extends HttpServlet {
-
     private final GroupService groupService;
 
     private final JsonHandler jsonHandler;
@@ -24,7 +23,6 @@ public class GroupServlet extends HttpServlet {
         this.groupService = new GroupServiceImpl();
         this.jsonHandler = new JsonHandler();
     }
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

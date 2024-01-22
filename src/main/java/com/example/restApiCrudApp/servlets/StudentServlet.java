@@ -15,8 +15,6 @@ import java.util.List;
 
 @WebServlet(name = "StudentServlet", value = "/api/student/*")
 public class StudentServlet extends HttpServlet {
-
-
     private final StudentService studentService;
 
     private final JsonHandler jsonHandler;

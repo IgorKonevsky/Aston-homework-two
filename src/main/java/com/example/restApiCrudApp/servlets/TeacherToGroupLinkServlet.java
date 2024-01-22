@@ -1,6 +1,6 @@
 package com.example.restApiCrudApp.servlets;
 
-import com.example.restApiCrudApp.dto.IdDTO;
+import com.example.restApiCrudApp.dto.LinkDto;
 import com.example.restApiCrudApp.services.TeacherService;
 import com.example.restApiCrudApp.services.impl.TeacherServiceImpl;
 import com.example.restApiCrudApp.util.JsonHandler;
@@ -14,8 +14,6 @@ import java.io.IOException;
 
 @WebServlet(name = "TeacherToGroupLinkServlet", value = "/api/link")
 public class TeacherToGroupLinkServlet extends HttpServlet {
-
-
     private final TeacherService teacherService;
 
     private final JsonHandler jsonHandler;
@@ -25,10 +23,9 @@ public class TeacherToGroupLinkServlet extends HttpServlet {
         this.jsonHandler = new JsonHandler();
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        IdDTO ids = jsonHandler.readJson(req, IdDTO.class);
+        LinkDto ids = jsonHandler.readJson(req, LinkDto.class);
 
         jsonHandler.writeJson(resp, teacherService.linkTeacherToGroup(ids));
 

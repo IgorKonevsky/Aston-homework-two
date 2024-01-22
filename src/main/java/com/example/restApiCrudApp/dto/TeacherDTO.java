@@ -16,16 +16,10 @@ import java.util.List;
 @Builder
 @ToString
 public class TeacherDTO {
-
     private Long id;
-
     private String firstName;
-
     private String lastName;
-
     private Long subjectId;
-
     private String subjectName;
-
     private List<GroupDTO> groupDTOS;
 }

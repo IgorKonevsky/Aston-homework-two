@@ -16,11 +16,8 @@ import java.util.List;
 @Builder
 @ToString
 public class Group {
-
     private Long id;
-
     private Long number;
-
     private List<Teacher> teachers;
 
 }

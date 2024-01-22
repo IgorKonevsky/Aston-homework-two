@@ -10,10 +10,12 @@ import com.example.restApiCrudApp.repositories.TeacherRepository;
 import com.example.restApiCrudApp.services.TeacherService;
 import com.example.restApiCrudApp.services.impl.TeacherServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.TeacherTestUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,55 +23,35 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TeacherServiceTest {
-
     @Mock
     private TeacherRepository teacherRepository;
-
     @Mock
     private TeacherMapper teacherMapper;
-
     @Mock
     private SubjectRepository subjectRepository;
-
     @Mock
     private GroupRepository groupRepository;
-
     @Mock
     private GroupMapper groupMapper;
-
     private TeacherService teacherService;
+    private TeacherTestUtil util;
 
-    private Teacher expectedTeacher;
-
-    private TeacherDTO expectedTeacherDTO;
 
     @BeforeEach
     void setUp() {
         teacherService = new TeacherServiceImpl(teacherRepository, groupRepository, subjectRepository, teacherMapper, groupMapper);
-
-        expectedTeacher = Teacher.builder()
-                .id(1L)
-                .firstName("Firstname1")
-                .lastName("Lastname1")
-                .subjectId(101L)
-                .build();
-        expectedTeacherDTO = TeacherDTO.builder()
-                .id(1L)
-                .firstName("Firstname1")
-                .lastName("Lastname1")
-                .subjectId(101L)
-                .build();
-
+        util = new TeacherTestUtil();
     }
 
 
     @Test
+    @DisplayName("Test find teacher by id - teacher found")
     void testFindById() {
         Long teacherId = 1L;
 
 
-        when(teacherRepository.findById(teacherId)).thenReturn(expectedTeacher);
-        when(teacherMapper.toDTO(any())).thenReturn(expectedTeacherDTO);
+        when(teacherRepository.findById(teacherId)).thenReturn(util.getExpectedTeacher());
+        when(teacherMapper.toDTO(any())).thenReturn(util.getExpectedTeacherDTO());
 
         TeacherDTO teacherDTO = teacherService.findById(teacherId);
 
@@ -78,6 +60,7 @@ public class TeacherServiceTest {
     }
 
     @Test
+    @DisplayName("Test create teacher - teacher created")
     void testCreate() {
         Teacher teacherToCreate = Teacher.builder()
                 .firstName("Firstname1")
@@ -92,8 +75,8 @@ public class TeacherServiceTest {
 
 
         when(teacherMapper.toEntity(teacherDTOToCreate)).thenReturn(teacherToCreate);
-        when(teacherRepository.create(teacherToCreate)).thenReturn(expectedTeacher);
-        when(teacherMapper.toDTO(expectedTeacher)).thenReturn(expectedTeacherDTO);
+        when(teacherRepository.create(teacherToCreate)).thenReturn(util.getExpectedTeacher());
+        when(teacherMapper.toDTO(util.getExpectedTeacher())).thenReturn(util.getExpectedTeacherDTO());
 
         TeacherDTO createdTeacherDTO = teacherService.create(teacherDTOToCreate);
 
@@ -102,6 +85,7 @@ public class TeacherServiceTest {
     }
 
     @Test
+    @DisplayName("Test update teacher - teacher updated")
     void testUpdate() {
 
 
@@ -117,8 +101,8 @@ public class TeacherServiceTest {
                 .build();
 
         when(teacherMapper.toEntity(teacherDTOToUpdate)).thenReturn(teacherToUpdate);
-        when(teacherRepository.update(teacherToUpdate)).thenReturn(expectedTeacher);
-        when(teacherMapper.toDTO(expectedTeacher)).thenReturn(expectedTeacherDTO);
+        when(teacherRepository.update(teacherToUpdate)).thenReturn(util.getExpectedTeacher());
+        when(teacherMapper.toDTO(util.getExpectedTeacher())).thenReturn(util.getExpectedTeacherDTO());
 
         TeacherDTO updatedTeacherDTO = teacherService.update(teacherDTOToUpdate);
 

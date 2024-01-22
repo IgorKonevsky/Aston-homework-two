@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectRepositoryImpl implements SubjectRepository {
-
     private static final String SQL_SELECT_ALL = "SELECT * FROM subject";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM subject WHERE id = ?";
     private static final String SQL_INSERT = "INSERT INTO subject(name) VALUES (?)";
     private static final String SQL_UPDATE = "UPDATE subject SET name = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM subject WHERE id = ?";
-
     private final DatabaseConnectionInitializer databaseConnectionInitializer;
     private static final String SQL_GET_NAME_BY_TEACHER_ID = "SELECT \n" +
             "    subject.name AS subject_name\n" +
@@ -107,7 +105,6 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         }
     }
 
-
     @Override
     public Subject create(Subject subject) {
         try {
@@ -126,7 +123,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return subject;
+            return findById(subject.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -144,13 +141,12 @@ public class SubjectRepositoryImpl implements SubjectRepository {
 
             statement.executeUpdate();
 
-            return subject;
+            return findById(subject.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void delete(Long id) {
         try {

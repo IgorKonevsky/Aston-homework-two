@@ -17,11 +17,7 @@ import java.util.List;
 @Builder
 @ToString
 public class GroupDTO {
-
     private Long id;
-
     private Long number;
-
     private List<TeacherDTO> teacherDTOS;
-
 }

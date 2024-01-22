@@ -25,20 +25,14 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GroupRepositoryTest {
-
     @Mock
     private DatabaseConnectionInitializer databaseConnectionInitializer;
-
     @Mock
     private Connection connection;
-
     @Mock
     private PreparedStatement preparedStatement;
-
     @Mock
     private ResultSet resultSet;
-
-
     private GroupRepository groupRepository;
 
     @BeforeEach

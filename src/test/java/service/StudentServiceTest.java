@@ -7,10 +7,12 @@ import com.example.restApiCrudApp.repositories.StudentRepository;
 import com.example.restApiCrudApp.services.StudentService;
 import com.example.restApiCrudApp.services.impl.StudentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.StudentTestUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,46 +20,29 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
-
     @Mock
     private StudentRepository studentRepository;
-
     @Mock
     private StudentMapper studentMapper;
-
     private StudentService studentService;
+    private StudentTestUtil util;
 
-    private Student expectedStudent;
-
-    private StudentDTO expectedStudentDTO;
 
     @BeforeEach
     void setUp() {
         studentService = new StudentServiceImpl(studentRepository, studentMapper);
-
-        expectedStudent = Student.builder()
-                .id(1L)
-                .firstName("Firstname1")
-                .lastName("Lastname1")
-                .groupId(101L)
-                .build();
-        expectedStudentDTO = StudentDTO.builder()
-                .id(1L)
-                .firstName("Firstname1")
-                .lastName("Lastname1")
-                .groupId(101L)
-                .build();
-
+        util = new StudentTestUtil();
     }
 
 
     @Test
+    @DisplayName("Test find student by id - student found")
     void testFindById() {
         Long studentId = 1L;
 
 
-        when(studentRepository.findById(studentId)).thenReturn(expectedStudent);
-        when(studentMapper.toDTO(any())).thenReturn(expectedStudentDTO);
+        when(studentRepository.findById(studentId)).thenReturn(util.getExpectedStudent());
+        when(studentMapper.toDTO(any())).thenReturn(util.getExpectedStudentDTO());
 
         StudentDTO studentDTO = studentService.findById(studentId);
 
@@ -66,6 +51,7 @@ public class StudentServiceTest {
     }
 
     @Test
+    @DisplayName("Test create student - student created")
     void testCreate() {
         Student studentToCreate = Student.builder()
                 .firstName("Firstname1")
@@ -80,8 +66,8 @@ public class StudentServiceTest {
 
 
         when(studentMapper.toEntity(studentDTOToCreate)).thenReturn(studentToCreate);
-        when(studentRepository.create(studentToCreate)).thenReturn(expectedStudent);
-        when(studentMapper.toDTO(expectedStudent)).thenReturn(expectedStudentDTO);
+        when(studentRepository.create(studentToCreate)).thenReturn(util.getExpectedStudent());
+        when(studentMapper.toDTO(util.getExpectedStudent())).thenReturn(util.getExpectedStudentDTO());
 
         StudentDTO createdStudentDTO = studentService.create(studentDTOToCreate);
 
@@ -90,6 +76,7 @@ public class StudentServiceTest {
     }
 
     @Test
+    @DisplayName("Test update student - student updated")
     void testUpdate() {
 
 
@@ -105,8 +92,8 @@ public class StudentServiceTest {
                 .build();
 
         when(studentMapper.toEntity(studentDTOToUpdate)).thenReturn(studentToUpdate);
-        when(studentRepository.update(studentToUpdate)).thenReturn(expectedStudent);
-        when(studentMapper.toDTO(expectedStudent)).thenReturn(expectedStudentDTO);
+        when(studentRepository.update(studentToUpdate)).thenReturn(util.getExpectedStudent());
+        when(studentMapper.toDTO(util.getExpectedStudent())).thenReturn(util.getExpectedStudentDTO());
 
         StudentDTO updatedStudentDTO = studentService.update(studentDTOToUpdate);
 

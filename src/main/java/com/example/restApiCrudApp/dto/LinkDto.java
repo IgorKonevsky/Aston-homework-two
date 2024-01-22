@@ -11,8 +11,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class IdDTO {
+public class LinkDto {
     private Long teacherId;
-
     private Long groupId;
 }

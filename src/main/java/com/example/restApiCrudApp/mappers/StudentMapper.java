@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface StudentMapper extends MapperTemplate<Student, StudentDTO> {
-
     @Override
     Student toEntity(StudentDTO studentDTO);
 

@@ -9,10 +9,12 @@ import com.example.restApiCrudApp.repositories.TeacherRepository;
 import com.example.restApiCrudApp.services.GroupService;
 import com.example.restApiCrudApp.services.impl.GroupServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.GroupTestUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,8 +22,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GroupServiceTest {
-
-
     @Mock
     private GroupRepository groupRepository;
     @Mock
@@ -30,37 +30,27 @@ class GroupServiceTest {
     private GroupMapperImpl groupMapper;
     @Mock
     private TeacherMapper teacherMapper;
-
     private GroupService groupService;
-
-    private Group expectedGroup;
-
-    private GroupDTO expectedGroupDTO;
+    private GroupTestUtil util;
 
 
     @BeforeEach
     void setUp() {
         groupService = new GroupServiceImpl(groupRepository, teacherRepository, groupMapper, teacherMapper);
 
-        expectedGroup = Group.builder()
-                .id(1L)
-                .number(101L)
-                .build();
-        expectedGroupDTO = GroupDTO.builder()
-                .id(1L)
-                .number(101L)
-                .build();
+        util = new GroupTestUtil();
 
     }
 
 
     @Test
+    @DisplayName("Test find group by id - group found")
     void testFindById() {
         Long groupId = 1L;
 
 
-        when(groupRepository.findById(groupId)).thenReturn(expectedGroup);
-        when(groupMapper.toDTO(any())).thenReturn(expectedGroupDTO);
+        when(groupRepository.findById(groupId)).thenReturn(util.getExpectedGroup());
+        when(groupMapper.toDTO(any())).thenReturn(util.getExpectedGroupDTO());
 
         GroupDTO groupDTO = groupService.findById(groupId);
 
@@ -69,6 +59,7 @@ class GroupServiceTest {
     }
 
     @Test
+    @DisplayName("Test create group - group created")
     void testCreate() {
         Group groupToCreate = Group.builder()
                 .number(101L)
@@ -79,8 +70,8 @@ class GroupServiceTest {
 
 
         when(groupMapper.toEntity(groupDTOToCreate)).thenReturn(groupToCreate);
-        when(groupRepository.create(groupToCreate)).thenReturn(expectedGroup);
-        when(groupMapper.toDTO(expectedGroup)).thenReturn(expectedGroupDTO);
+        when(groupRepository.create(groupToCreate)).thenReturn(util.getExpectedGroup());
+        when(groupMapper.toDTO(util.getExpectedGroup())).thenReturn(util.getExpectedGroupDTO());
 
         GroupDTO createdGroupDTO = groupService.create(groupDTOToCreate);
 
@@ -89,6 +80,7 @@ class GroupServiceTest {
     }
 
     @Test
+    @DisplayName("Test update group - group updated")
     void testUpdate() {
 
 
@@ -100,8 +92,8 @@ class GroupServiceTest {
                 .build();
 
         when(groupMapper.toEntity(groupDTOToUpdate)).thenReturn(groupToUpdate);
-        when(groupRepository.update(groupToUpdate)).thenReturn(expectedGroup);
-        when(groupMapper.toDTO(expectedGroup)).thenReturn(expectedGroupDTO);
+        when(groupRepository.update(groupToUpdate)).thenReturn(util.getExpectedGroup());
+        when(groupMapper.toDTO(util.getExpectedGroup())).thenReturn(util.getExpectedGroupDTO());
 
         GroupDTO updatedGroupDTO = groupService.update(groupDTOToUpdate);
 

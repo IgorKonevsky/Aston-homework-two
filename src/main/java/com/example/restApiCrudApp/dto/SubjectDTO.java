@@ -12,8 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class SubjectDTO {
-
     private Long id;
-
     private String name;
 }

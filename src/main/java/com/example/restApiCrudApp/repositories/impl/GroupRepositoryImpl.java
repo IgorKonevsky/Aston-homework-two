@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupRepositoryImpl implements GroupRepository {
-
     private static final String SQL_SELECT_ALL = "SELECT * FROM group_table";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM group_table WHERE id = ?";
     private static final String SQL_SELECT_BY_TEACHER_ID = "SELECT\n" +
@@ -30,7 +29,6 @@ public class GroupRepositoryImpl implements GroupRepository {
     private static final String SQL_INSERT = "INSERT INTO group_table(number) VALUES (?)";
     private static final String SQL_UPDATE = "UPDATE group_table SET number = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM group_table WHERE id = ?";
-
     private final DatabaseConnectionInitializer databaseConnectionInitializer;
 
     public GroupRepositoryImpl() {
@@ -122,7 +120,6 @@ public class GroupRepositoryImpl implements GroupRepository {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, group.getNumber());
 
-
             statement.executeUpdate();
 
             try {
@@ -133,7 +130,7 @@ public class GroupRepositoryImpl implements GroupRepository {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return group;
+            return findById(group.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -153,7 +150,7 @@ public class GroupRepositoryImpl implements GroupRepository {
             statement.executeUpdate();
 
 
-            return group;
+            return findById(group.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -12,9 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class Subject {
-
     private Long id;
-
     private String name;
 
 }

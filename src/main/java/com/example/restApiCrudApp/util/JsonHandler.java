@@ -18,7 +18,6 @@ public class JsonHandler {
         String requestBody = request.getReader().lines().collect(Collectors.joining());
         return mapper.readValue(requestBody, targetClass);
     }
-
     public void writeJson(HttpServletResponse response, Object dto) throws IOException {
 
         response.setContentType(RESPONSE_TYPE_JSON);

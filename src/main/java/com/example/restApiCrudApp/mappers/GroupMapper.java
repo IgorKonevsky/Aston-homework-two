@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface GroupMapper extends MapperTemplate<Group, GroupDTO> {
-
     @Override
     Group toEntity(GroupDTO groupDTO);
 

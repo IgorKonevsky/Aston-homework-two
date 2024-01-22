@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherRepositoryImpl implements TeacherRepository {
-
-
     private static final String SQL_SELECT_ALL = "SELECT * FROM teacher";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM teacher WHERE id = ?";
     private static final String SQL_SELECT_BY_GROUP_ID = "SELECT \n" +
@@ -34,7 +32,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     private static final String SQL_INSERT_LINK = "INSERT INTO teacher_group(teacher_id, group_id) VALUES (?,?)";
     private static final String SQL_UPDATE = "UPDATE teacher SET firstname = ?, lastname = ?, subject_id = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM teacher WHERE id = ?";
-
     private final DatabaseConnectionInitializer databaseConnectionInitializer;
 
     public TeacherRepositoryImpl() {
@@ -95,7 +92,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public List<Teacher> findTeachersByGroupId(Long id) {
@@ -160,7 +156,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return teacher;
+            return findById(teacher.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -180,7 +176,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
             statement.executeUpdate();
 
-            return teacher;
+            return findById(teacher.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -196,7 +192,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
             statement.setLong(1, id);
 
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

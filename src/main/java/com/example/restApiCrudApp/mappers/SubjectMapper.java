@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface SubjectMapper extends MapperTemplate<Subject, SubjectDTO> {
-
     @Override
     Subject toEntity(SubjectDTO subjectDTO);
 

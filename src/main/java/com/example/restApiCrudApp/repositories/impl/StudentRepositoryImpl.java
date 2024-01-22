@@ -13,14 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepositoryImpl implements StudentRepository {
-
-
     private static final String SQL_SELECT_ALL = "SELECT * FROM student";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM student WHERE id = ?";
     private static final String SQL_INSERT = "INSERT INTO student(firstname, lastname, group_id) VALUES (?,?,?)";
     private static final String SQL_UPDATE = "UPDATE student SET firstname = ?, lastname = ?, group_id = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM student WHERE id = ?";
-
     private final DatabaseConnectionInitializer databaseConnectionInitializer;
 
     public StudentRepositoryImpl() {
@@ -54,7 +51,6 @@ public class StudentRepositoryImpl implements StudentRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -85,7 +81,6 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     }
 
-
     @Override
     public Student create(Student student) {
         try {
@@ -106,7 +101,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return student;
+            return findById(student.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -127,7 +122,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
             statement.executeUpdate();
 
-            return student;
+            return findById(student.getId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

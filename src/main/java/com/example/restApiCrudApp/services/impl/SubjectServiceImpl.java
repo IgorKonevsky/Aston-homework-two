@@ -11,9 +11,7 @@ import com.example.restApiCrudApp.services.SubjectService;
 import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService {
-
     private final SubjectRepository subjectRepository;
-
     private final SubjectMapper subjectMapper;
 
     public SubjectServiceImpl() {
@@ -52,7 +50,6 @@ public class SubjectServiceImpl implements SubjectService {
         Subject updatedSubject = subjectRepository.update(subject);
         return subjectMapper.toDTO(updatedSubject);
     }
-
 
     @Override
     public void delete(Long id) {
